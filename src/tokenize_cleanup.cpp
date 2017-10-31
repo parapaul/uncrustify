@@ -276,14 +276,15 @@ void tokenize_cleanup(void)
          {
             set_chunk_type(next, CT_PTR_TYPE);
          }
-         else if (  pc->type == CT_WORD
-                 && prev != nullptr
-                 && prev->type == CT_DC_MEMBER
-                 && (cpd.lang_flags & LANG_CPP) != 0)
-         {
-            set_chunk_type(pc, CT_TYPE);
-            set_chunk_type(next, CT_PTR_TYPE);
-         }
+//p_busko: commented out because of https://github.com/uncrustify/uncrustify/issues/1402
+//         else if (  pc->type == CT_WORD
+//                 && prev != nullptr
+//                 && prev->type == CT_DC_MEMBER
+//                 && (cpd.lang_flags & LANG_CPP) != 0)
+//         {
+//            set_chunk_type(pc, CT_TYPE);
+//            set_chunk_type(next, CT_PTR_TYPE);
+//         }
       }
 
       if (pc->type == CT_TYPE_CAST && next->type == CT_ANGLE_OPEN)
