@@ -4470,8 +4470,9 @@ static void mark_function(chunk_t *pc)
       set_chunk_parent(semi, pc->type);
    }
 
-   flag_parens(paren_open, PCF_IN_FCN_DEF, CT_FPAREN_OPEN, pc->type, false);
-
+   UINT64 flags = pc->type == CT_FUNC_CTOR_VAR ? PCF_IN_CTOR_CALL : PCF_IN_FCN_DEF;
+   flag_parens(paren_open, flags, CT_FPAREN_OPEN, pc->type, false);
+    
    if (pc->type == CT_FUNC_CTOR_VAR)
    {
       chunk_flags_set(pc, PCF_VAR_1ST_DEF);
@@ -4578,7 +4579,7 @@ static void mark_cpp_constructor(chunk_t *pc)
          if (var->type == CT_TYPE || var->type == CT_WORD)
          {
             set_chunk_type(var, CT_FUNC_CTOR_VAR);
-            flag_parens(tmp, PCF_IN_FCN_CALL, CT_FPAREN_OPEN, CT_FUNC_CTOR_VAR, false);
+            flag_parens(tmp, PCF_IN_CTOR_CALL, CT_FPAREN_OPEN, CT_FUNC_CTOR_VAR, false);
          }
       }
    }

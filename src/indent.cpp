@@ -1202,7 +1202,7 @@ void indent_text(void)
          else if (  !cpd.settings[UO_indent_paren_open_brace].b
                  && ((cpd.lang_flags & LANG_CS) == 0)
                  && pc->parent_type == CT_CPP_LAMBDA
-                 && pc->flags & PCF_IN_FCN_DEF
+                 && pc->flags & PCF_IN_CTOR_CALL
                  && chunk_is_newline(chunk_get_next_nc(pc)))
          {
             // Issue #1165
