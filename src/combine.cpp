@@ -2696,14 +2696,14 @@ static void fix_enum_struct_union(chunk_t *pc)
       {
          return;
       }
-      set_chunk_parent(next, pc->type);
-
-      // next up is either a colon, open brace, or open parenthesis (pawn)
-      if (!next)
+      //it could be forward declaration, i.e. 'struct A;' - don't touch parent type of semicolon
+      // as it leads to nl_after_struct being applied to forward declarations
+      if (next->type != CT_SEMICOLON)
       {
-         return;
+         set_chunk_parent(next, pc->type);
       }
 
+      // next up is either a colon, open brace, or open parenthesis (pawn)
       if ((cpd.lang_flags & LANG_PAWN) && next->type == CT_PAREN_OPEN)
       {
          next = set_paren_parent(next, CT_ENUM);
