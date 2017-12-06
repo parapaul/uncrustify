@@ -1802,8 +1802,8 @@ static argval_t do_space(chunk_t *first, chunk_t *second, int &min_sp, bool comp
 
    if (second->type == CT_COMMENT && second->parent_type == CT_COMMENT_EMBED)
    {
-      log_rule("FORCE");
-      return(AV_FORCE);
+      log_rule("sp_before_tr_emb_cmt");
+      return(cpd.settings[UO_sp_before_tr_emb_cmt].a);
    }
 
    if (chunk_is_comment(second))
