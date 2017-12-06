@@ -1764,7 +1764,9 @@ static void newlines_brace_pair(chunk_t *br_open)
    // Insert a newline between the '=' and open brace, if needed
    LOG_FMT(LNL1LINE, "%s(%d): br_open->text() '%s', br_open->type [%s], br_open->parent_type [%s]\n",
            __func__, __LINE__, br_open->text(), get_token_name(br_open->type), get_token_name(br_open->parent_type));
-   if (br_open->parent_type == CT_ASSIGN)
+
+   bool inInitializer = br_open->prev != nullptr && br_open->prev->parent_type == CT_FUNC_CTOR_VAR;
+   if (br_open->parent_type == CT_ASSIGN || inInitializer)
    {
       // Only mess with it if the open brace is followed by a newline
       if (chunk_is_newline(next))
