@@ -3699,6 +3699,10 @@ void newlines_chunk_pos(c_token_t chunk_type, tokenpos_e mode)
                // change mode
                mode_local = cpd.settings[UO_pos_class_comma].tp;
             }
+            else if (pc->flags & PCF_IN_CONST_ARGS)
+            {
+                mode_local = cpd.settings[UO_pos_constr_comma].tp;
+            }
             else if (pc->flags & PCF_IN_ENUM)
             {
                mode_local = cpd.settings[UO_pos_enum_comma].tp;
