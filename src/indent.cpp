@@ -1183,6 +1183,24 @@ void indent_text(void)
             frm.pse[frm.pse_tos - 1].indent_tmp = frm.pse[frm.pse_tos].indent_tmp;
             log_indent_tmp();
          }
+         else if (frm.pse_tos > 2 && frm.pse[frm.pse_tos - 1].pc != nullptr
+                  && frm.pse[frm.pse_tos - 1].pc->type == CT_FPAREN_OPEN
+                  && frm.pse[frm.pse_tos - 1].pc->parent_type == CT_FUNC_CTOR_VAR
+                  && frm.pse[frm.pse_tos - 2].pc != nullptr
+                  && frm.pse[frm.pse_tos - 2].pc->type == CT_CONSTR_COLON)
+         {
+             frm.pse[frm.pse_tos].brace_indent = frm.pse[frm.pse_tos - 2].indent
+                + 2/*add 2 symbols for leading comma and space after it*/;
+             indent_column_set(frm.pse[frm.pse_tos].brace_indent);
+             frm.pse[frm.pse_tos].indent = indent_column + indent_size;
+             log_indent();
+             frm.pse[frm.pse_tos].indent_tab = frm.pse[frm.pse_tos].indent;
+             frm.pse[frm.pse_tos].indent_tmp = frm.pse[frm.pse_tos].indent;
+             log_indent_tmp();
+             
+             frm.pse[frm.pse_tos - 1].indent_tmp = frm.pse[frm.pse_tos].indent_tmp;
+             log_indent_tmp();
+         }
          else if (  (cpd.lang_flags & LANG_CS)
                  && cpd.settings[UO_indent_cs_delegate_brace].b
                  && (  pc->parent_type == CT_LAMBDA
