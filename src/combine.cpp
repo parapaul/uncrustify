@@ -4563,7 +4563,12 @@ static void mark_cpp_constructor(chunk_t *pc)
          && tmp->type != CT_BRACE_OPEN
          && !chunk_is_semicolon(tmp))
    {
-      chunk_flags_set(tmp, PCF_IN_CONST_ARGS);
+      if (hit_colon)
+      {
+         //not sure what was 'PCF_IN_CONST_ARGS' original meanging, but it seems convenient
+         //to use it to mark CTOR initialization list
+         chunk_flags_set(tmp, PCF_IN_CONST_ARGS);
+      }
       tmp = chunk_get_next_ncnl(tmp);
       if (chunk_is_str(tmp, ":", 1) && tmp->level == paren_open->level)
       {
