@@ -4558,7 +4558,7 @@ static void mark_cpp_constructor(chunk_t *pc)
    bool hit_colon = false;
    while (  tmp != nullptr
          && (tmp->type != CT_BRACE_OPEN || tmp->level != paren_open->level)
-         && !chunk_is_semicolon(tmp))
+         && (hit_colon || !chunk_is_semicolon(tmp)))
    {
       if (hit_colon)
       {
