@@ -4561,7 +4561,7 @@ static void mark_cpp_constructor(chunk_t *pc)
    bool hit_colon = false;
    while (  tmp != nullptr
          && tmp->type != CT_BRACE_OPEN
-         && !chunk_is_semicolon(tmp))
+         && (hit_colon || !chunk_is_semicolon(tmp)))
    {
       chunk_flags_set(tmp, PCF_IN_CONST_ARGS);
       tmp = chunk_get_next_ncnl(tmp);
